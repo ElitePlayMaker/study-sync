@@ -1,0 +1,18 @@
+﻿{% extends 'layouts/dashboard.html' %}
+{% block title %}Lecturer Calendar — {{ APP_NAME }}{% endblock %}
+{% block page_title %}My Calendar{% endblock %}
+{% block extra_css %}<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">{% endblock %}
+{% block sidebar %}
+<nav class="nav flex-column ss-sidebar-nav">
+    <a class="nav-link" href="{{ url_for('lecturer.dashboard') }}"><i class="bi bi-grid me-2"></i>Overview</a>
+    <a class="nav-link active" href="{{ url_for('lecturer.calendar') }}"><i class="bi bi-calendar3 me-2"></i>Calendar</a>
+</nav>
+{% endblock %}
+{% block dashboard_content %}
+<div class="ss-card ss-fade-in"><div id="studySyncCalendar"></div></div>
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script>window.SS_CALENDAR_EVENTS_URL = "{{ url_for('lecturer.calendar_events') }}";</script>
+<script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+{% endblock %}

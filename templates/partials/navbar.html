@@ -1,0 +1,40 @@
+﻿<nav class="navbar navbar-expand-lg ss-navbar sticky-top">
+    <div class="container">
+        <a class="navbar-brand ss-brand" href="{{ url_for('public.landing') }}">
+            <i class="bi bi-mortarboard-fill me-2"></i>{{ APP_NAME }}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ssNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="ssNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+                {% if not session.get('user_id') %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.landing') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('public.contact') }}">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.student_login') }}">Student Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.lecturer_login') }}">Lecturer</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.admin_login') }}">Admin</a></li>
+                {% else %}
+                {% if session.get('role') == 'student' %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('student.dashboard') }}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('student.browse_classes') }}">Book Class</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('student.calendar') }}">Calendar</a></li>
+                {% elif session.get('role') == 'lecturer' %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('lecturer.dashboard') }}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('lecturer.calendar') }}">Calendar</a></li>
+                {% elif session.get('role') == 'admin' %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin.dashboard') }}">Dashboard</a></li>
+                {% endif %}
+                <li class="nav-item"><span class="nav-link text-muted"><i class="bi bi-person-circle me-1"></i>{{ session.get('name') }}</span></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% endif %}
+                <li class="nav-item">
+                    <button class="btn btn-sm ss-theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <i class="bi bi-moon-stars"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

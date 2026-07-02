@@ -1,0 +1,79 @@
+﻿{% extends 'layouts/dashboard.html' %}
+{% block title %}Student Dashboard — {{ APP_NAME }}{% endblock %}
+{% block page_title %}Welcome, {{ session.get('name') }}{% endblock %}
+{% block page_subtitle %}Your learning schedule at a glance{% endblock %}
+{% block sidebar %}
+<nav class="nav flex-column ss-sidebar-nav">
+    <a class="nav-link active" href="{{ url_for('student.dashboard') }}"><i class="bi bi-grid me-2"></i>Overview</a>
+    <a class="nav-link" href="{{ url_for('student.browse_classes') }}"><i class="bi bi-search me-2"></i>Book Class</a>
+    <a class="nav-link" href="{{ url_for('student.calendar') }}"><i class="bi bi-calendar3 me-2"></i>Calendar</a>
+    <a class="nav-link" href="{{ url_for('student.profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
+</nav>
+{% endblock %}
+{% block dashboard_content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="ss-stat-card ss-fade-in">
+            <span class="text-muted">Upcoming Sessions</span>
+            <h2>{{ upcoming|length }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="ss-stat-card ss-fade-in">
+            <span class="text-muted">Total Bookings</span>
+            <h2>{{ bookings|selectattr('status', 'equalto', 'confirmed')|list|length }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="ss-stat-card ss-fade-in">
+            <span class="text-muted">Notifications</span>
+            <h2>{{ unread }}</h2>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-1">
+    <div class="col-lg-7">
+        <div class="ss-card ss-fade-in">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Upcoming Sessions</h5>
+                <a href="{{ url_for('student.browse_classes') }}" class="btn btn-sm btn-outline-primary">Book More</a>
+            </div>
+            {% for booking in upcoming %}
+            <div class="ss-list-item">
+                <div>
+                    <strong>{{ booking.title }}</strong>
+                    <div class="text-muted small">{{ booking.start_time.strftime('%a, %d %b %Y · %H:%M') }} · {{ booking.lecturer_name }}</div>
+                </div>
+                <form method="post" action="{{ url_for('student.cancel_booking', booking_id=booking.booking_id) }}">
+                    <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                </form>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No upcoming sessions. <a href="{{ url_for('student.browse_classes') }}">Browse classes</a></p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="ss-card ss-fade-in">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Notifications</h5>
+                {% if unread > 0 %}
+                <form method="post" action="{{ url_for('student.mark_all_notifications') }}">
+                    <button class="btn btn-sm btn-link">Mark all read</button>
+                </form>
+                {% endif %}
+            </div>
+            {% for note in notifications %}
+            <div class="ss-notification-item {% if not note.is_read %}unread{% endif %}">
+                <strong>{{ note.title }}</strong>
+                <p class="mb-1 small text-muted">{{ note.message }}</p>
+                <small class="text-muted">{{ note.created_at.strftime('%d %b %H:%M') }}</small>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No notifications yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

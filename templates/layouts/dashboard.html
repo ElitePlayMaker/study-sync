@@ -1,0 +1,25 @@
+﻿{% extends 'layouts/base.html' %}
+{% block main_class %}ss-dashboard-wrapper{% endblock %}
+{% block content %}
+<div class="ss-dashboard">
+    <aside class="ss-sidebar ss-fade-in">
+        <div class="ss-sidebar-brand mb-4">
+            <i class="bi bi-mortarboard-fill"></i>
+            <span>{{ APP_NAME }}</span>
+        </div>
+        {% block sidebar %}{% endblock %}
+    </aside>
+    <section class="ss-main-content ss-fade-in">
+        <header class="ss-page-header d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 mb-1">{% block page_title %}Dashboard{% endblock %}</h1>
+                <p class="text-muted mb-0">{% block page_subtitle %}{% endblock %}</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                {% block header_actions %}{% endblock %}
+            </div>
+        </header>
+        {% block dashboard_content %}{% endblock %}
+    </section>
+</div>
+{% endblock %}

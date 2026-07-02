@@ -1,0 +1,261 @@
+﻿/* Study Sync — Modern blue & white theme with dark mode */
+
+:root,
+[data-theme="light"] {
+    --ss-primary: #2563eb;
+    --ss-primary-dark: #1d4ed8;
+    --ss-primary-light: #dbeafe;
+    --ss-bg: #f8fafc;
+    --ss-surface: #ffffff;
+    --ss-surface-2: #f1f5f9;
+    --ss-text: #0f172a;
+    --ss-text-muted: #64748b;
+    --ss-border: #e2e8f0;
+    --ss-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
+    --ss-navbar-bg: rgba(255, 255, 255, 0.92);
+    --ss-hero-gradient: linear-gradient(135deg, #eff6ff 0%, #f8fafc 50%, #ffffff 100%);
+}
+
+[data-theme="dark"] {
+    --ss-primary: #3b82f6;
+    --ss-primary-dark: #2563eb;
+    --ss-primary-light: #1e3a5f;
+    --ss-bg: #0b1220;
+    --ss-surface: #111827;
+    --ss-surface-2: #1f2937;
+    --ss-text: #f1f5f9;
+    --ss-text-muted: #94a3b8;
+    --ss-border: #334155;
+    --ss-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    --ss-navbar-bg: rgba(17, 24, 39, 0.95);
+    --ss-hero-gradient: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+}
+
+* { box-sizing: border-box; }
+
+body.ss-body {
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--ss-bg);
+    color: var(--ss-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Navbar */
+.ss-navbar {
+    background: var(--ss-navbar-bg) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.ss-brand {
+    font-weight: 700;
+    color: var(--ss-primary) !important;
+}
+
+.ss-navbar .nav-link {
+    color: var(--ss-text-muted);
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.ss-navbar .nav-link:hover {
+    color: var(--ss-primary);
+}
+
+.ss-theme-toggle {
+    border: 1px solid var(--ss-border);
+    background: var(--ss-surface);
+    color: var(--ss-text);
+    border-radius: 8px;
+    padding: 0.35rem 0.6rem;
+}
+
+/* Hero & landing */
+.ss-hero {
+    background: var(--ss-hero-gradient);
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.ss-hero-card, .ss-card, .ss-feature-card, .ss-class-card, .ss-stat-card {
+    background: var(--ss-surface);
+    border: 1px solid var(--ss-border);
+    border-radius: 16px;
+    box-shadow: var(--ss-shadow);
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ss-hero-card { padding: 2rem; }
+
+.ss-feature-card:hover, .ss-class-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.12);
+}
+
+.ss-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--ss-primary-light);
+    color: var(--ss-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.ss-badge {
+    background: var(--ss-primary-light);
+    color: var(--ss-primary);
+    font-weight: 600;
+}
+
+.ss-btn-primary {
+    background: var(--ss-primary);
+    border-color: var(--ss-primary);
+}
+
+.ss-btn-primary:hover {
+    background: var(--ss-primary-dark);
+    border-color: var(--ss-primary-dark);
+}
+
+/* Dashboard layout (Notion/Calendly inspired) */
+.ss-dashboard-wrapper {
+    padding: 0;
+    max-width: 100%;
+}
+
+.ss-dashboard {
+    display: flex;
+    min-height: calc(100vh - 72px);
+}
+
+.ss-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--ss-surface);
+    border-right: 1px solid var(--ss-border);
+    padding: 1.5rem 1rem;
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+}
+
+.ss-sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--ss-primary);
+    padding: 0 0.5rem;
+}
+
+.ss-sidebar-nav .nav-link {
+    color: var(--ss-text-muted);
+    border-radius: 10px;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.ss-sidebar-nav .nav-link:hover,
+.ss-sidebar-nav .nav-link.active {
+    background: var(--ss-primary-light);
+    color: var(--ss-primary);
+    font-weight: 600;
+}
+
+.ss-main-content {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    overflow-x: hidden;
+}
+
+.ss-stat-card h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ss-primary);
+    margin: 0.25rem 0 0;
+}
+
+.ss-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.ss-list-item:last-child { border-bottom: none; }
+
+.ss-notification-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--ss-border);
+}
+
+.ss-notification-item.unread {
+    border-left: 3px solid var(--ss-primary);
+    padding-left: 0.75rem;
+}
+
+/* Footer */
+.ss-footer {
+    background: var(--ss-surface);
+    border-top: 1px solid var(--ss-border);
+    color: var(--ss-text-muted);
+}
+
+/* Forms in dark mode */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background: var(--ss-surface-2);
+    border-color: var(--ss-border);
+    color: var(--ss-text);
+}
+
+[data-theme="dark"] .table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--ss-text);
+    --bs-table-border-color: var(--ss-border);
+}
+
+/* Animations */
+@keyframes ssFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ssSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ss-fade-in { animation: ssFadeIn 0.45s ease forwards; }
+.ss-slide-up { animation: ssSlideUp 0.6s ease forwards; }
+
+/* FullCalendar overrides */
+#studySyncCalendar {
+    --fc-border-color: var(--ss-border);
+    --fc-page-bg-color: var(--ss-surface);
+    --fc-neutral-bg-color: var(--ss-surface-2);
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .ss-dashboard { flex-direction: column; }
+    .ss-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--ss-border);
+    }
+    .ss-main-content { padding: 1rem; }
+}

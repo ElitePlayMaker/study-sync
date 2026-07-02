@@ -1,0 +1,51 @@
+﻿{% extends 'layouts/dashboard.html' %}
+{% block title %}{{ class_item.title }} — {{ APP_NAME }}{% endblock %}
+{% block page_title %}{{ class_item.title }}{% endblock %}
+{% block page_subtitle %}{{ class_item.lecturer_name }} · {{ class_item.location }}{% endblock %}
+{% block sidebar %}
+<nav class="nav flex-column ss-sidebar-nav">
+    <a class="nav-link" href="{{ url_for('student.dashboard') }}"><i class="bi bi-grid me-2"></i>Overview</a>
+    <a class="nav-link active" href="{{ url_for('student.browse_classes') }}"><i class="bi bi-search me-2"></i>Book Class</a>
+    <a class="nav-link" href="{{ url_for('student.calendar') }}"><i class="bi bi-calendar3 me-2"></i>Calendar</a>
+</nav>
+{% endblock %}
+{% block dashboard_content %}
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="ss-card ss-fade-in">
+            <h5>About this class</h5>
+            <p class="text-muted">{{ class_item.description }}</p>
+            <ul class="list-unstyled small text-muted">
+                <li><i class="bi bi-tag me-2"></i>{{ class_item.category }}</li>
+                <li><i class="bi bi-clock me-2"></i>{{ class_item.duration_minutes }} minutes</li>
+                <li><i class="bi bi-envelope me-2"></i>{{ class_item.lecturer_email }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="ss-card ss-fade-in">
+            <h5 class="mb-3">Available Time Slots</h5>
+            {% for slot in slots %}
+            <div class="ss-list-item">
+                <div>
+                    <strong>{{ slot.start_time.strftime('%A, %d %b %Y') }}</strong>
+                    <div class="text-muted small">{{ slot.start_time.strftime('%H:%M') }} – {{ slot.end_time.strftime('%H:%M') }}</div>
+                    <small class="text-muted">{{ slot.booked_count }} / {{ slot.max_capacity }} booked</small>
+                </div>
+                {% if slot.id in booked_slot_ids %}
+                <button class="btn btn-sm btn-secondary" disabled>Booked</button>
+                {% elif slot.booked_count >= slot.max_capacity %}
+                <button class="btn btn-sm btn-outline-danger" disabled>Full</button>
+                {% else %}
+                <form method="post" action="{{ url_for('student.book_slot', slot_id=slot.id) }}">
+                    <button class="btn btn-sm btn-primary ss-btn-primary">Book Slot</button>
+                </form>
+                {% endif %}
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No open slots for this class.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

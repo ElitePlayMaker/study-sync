@@ -1,0 +1,43 @@
+﻿{% extends 'layouts/dashboard.html' %}
+{% block title %}Admin Dashboard — {{ APP_NAME }}{% endblock %}
+{% block page_title %}Admin Dashboard{% endblock %}
+{% block page_subtitle %}Platform overview and management{% endblock %}
+{% block sidebar %}
+<nav class="nav flex-column ss-sidebar-nav">
+    <a class="nav-link active" href="{{ url_for('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>Overview</a>
+</nav>
+{% endblock %}
+{% block dashboard_content %}
+<div class="row g-4 mb-4">
+    <div class="col-md-4"><div class="ss-stat-card"><span class="text-muted">Students</span><h2>{{ stats.students }}</h2></div></div>
+    <div class="col-md-4"><div class="ss-stat-card"><span class="text-muted">Lecturers</span><h2>{{ stats.lecturers }}</h2></div></div>
+    <div class="col-md-4"><div class="ss-stat-card"><span class="text-muted">Confirmed Bookings</span><h2>{{ stats.bookings }}</h2></div></div>
+</div>
+<div class="ss-card ss-fade-in">
+    <h5 class="mb-3">All Classes</h5>
+    <div class="table-responsive">
+        <table class="table align-middle">
+            <thead><tr><th>Title</th><th>Lecturer</th><th>Category</th><th>Location</th><th>Slots</th><th>Actions</th></tr></thead>
+            <tbody>
+            {% for class_item in classes %}
+            <tr>
+                <td>{{ class_item.title }}</td>
+                <td>{{ class_item.lecturer_name }}</td>
+                <td>{{ class_item.category }}</td>
+                <td>{{ class_item.location }}</td>
+                <td>{{ class_item.slot_count }}</td>
+                <td class="d-flex gap-2">
+                    <a href="{{ url_for('admin.edit_class', class_id=class_item.id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <form method="post" action="{{ url_for('admin.delete_class', class_id=class_item.id) }}" onsubmit="return confirm('Delete this class?')">
+                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-muted">No classes found.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

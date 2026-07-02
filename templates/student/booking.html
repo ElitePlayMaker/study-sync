@@ -1,0 +1,54 @@
+﻿{% extends 'layouts/dashboard.html' %}
+{% block title %}Book a Class — {{ APP_NAME }}{% endblock %}
+{% block page_title %}Book a Class{% endblock %}
+{% block page_subtitle %}Search and filter available sessions{% endblock %}
+{% block sidebar %}
+<nav class="nav flex-column ss-sidebar-nav">
+    <a class="nav-link" href="{{ url_for('student.dashboard') }}"><i class="bi bi-grid me-2"></i>Overview</a>
+    <a class="nav-link active" href="{{ url_for('student.browse_classes') }}"><i class="bi bi-search me-2"></i>Book Class</a>
+    <a class="nav-link" href="{{ url_for('student.calendar') }}"><i class="bi bi-calendar3 me-2"></i>Calendar</a>
+    <a class="nav-link" href="{{ url_for('student.profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
+</nav>
+{% endblock %}
+{% block dashboard_content %}
+<div class="ss-card ss-fade-in mb-4">
+    <form method="get" class="row g-3 align-items-end">
+        <div class="col-md-5">
+            <label class="form-label">Search</label>
+            <input type="text" name="q" class="form-control" placeholder="Title, lecturer, description..." value="{{ search }}">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select">
+                <option value="">All categories</option>
+                {% for cat in categories %}
+                <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary w-100 ss-btn-primary"><i class="bi bi-funnel me-1"></i>Filter</button>
+        </div>
+    </form>
+</div>
+
+<div class="row g-4">
+    {% for class_item in classes %}
+    <div class="col-md-6 col-xl-4">
+        <div class="ss-class-card ss-fade-in h-100">
+            <span class="badge ss-badge mb-2">{{ class_item.category }}</span>
+            <h5>{{ class_item.title }}</h5>
+            <p class="text-muted small">{{ class_item.description[:120] }}{% if class_item.description|length > 120 %}...{% endif %}</p>
+            <div class="small text-muted mb-3">
+                <i class="bi bi-person me-1"></i>{{ class_item.lecturer_name }}
+                <span class="mx-2">·</span>
+                <i class="bi bi-geo-alt me-1"></i>{{ class_item.location }}
+            </div>
+            <a href="{{ url_for('student.class_detail', class_id=class_item.id) }}" class="btn btn-sm btn-primary ss-btn-primary">View Slots</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12"><div class="ss-card text-muted">No classes match your search.</div></div>
+    {% endfor %}
+</div>
+{% endblock %}

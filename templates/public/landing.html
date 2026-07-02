@@ -1,0 +1,74 @@
+﻿{% extends 'layouts/base.html' %}
+{% block title %}{{ APP_NAME }} — {{ APP_TAGLINE }}{% endblock %}
+{% block main_class %}{% endblock %}
+{% block content %}
+<section class="ss-hero ss-fade-in">
+    <div class="container">
+        <div class="row align-items-center g-5 py-5">
+            <div class="col-lg-6">
+                <span class="badge ss-badge mb-3">Academic Scheduling SaaS</span>
+                <h1 class="display-4 fw-bold mb-3">{{ APP_NAME }}</h1>
+                <p class="lead mb-4">{{ APP_TAGLINE }}</p>
+                <p class="text-muted mb-4">Coordinate lectures, book time slots, and track attendance — all in one clean workspace inspired by Notion and Calendly.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg ss-btn-primary">
+                        <i class="bi bi-person-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{{ url_for('auth.student_login') }}" class="btn btn-outline-primary btn-lg">Student Login</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ss-hero-card ss-slide-up">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="ss-icon-circle"><i class="bi bi-calendar3"></i></div>
+                        <div>
+                            <h5 class="mb-0">Smart Calendar</h5>
+                            <small class="text-muted">Visualize your week at a glance</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="ss-icon-circle"><i class="bi bi-clock-history"></i></div>
+                        <div>
+                            <h5 class="mb-0">Time-Slot Booking</h5>
+                            <small class="text-muted">Reserve sessions in seconds</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="ss-icon-circle"><i class="bi bi-shield-check"></i></div>
+                        <div>
+                            <h5 class="mb-0">Secure & Reliable</h5>
+                            <small class="text-muted">Hashed passwords & role-based access</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="ss-feature-card ss-fade-in h-100">
+                <i class="bi bi-people fs-2 text-primary mb-3"></i>
+                <h4>For Students</h4>
+                <p class="text-muted">Browse classes, filter by category, and book available time slots instantly.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="ss-feature-card ss-fade-in h-100">
+                <i class="bi bi-easel fs-2 text-primary mb-3"></i>
+                <h4>For Lecturers</h4>
+                <p class="text-muted">Create sessions, manage schedules, and track student attendance.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="ss-feature-card ss-fade-in h-100">
+                <i class="bi bi-graph-up fs-2 text-primary mb-3"></i>
+                <h4>For Admins</h4>
+                <p class="text-muted">Oversee platform activity, manage classes, and monitor bookings.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

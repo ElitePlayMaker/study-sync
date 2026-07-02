@@ -1,0 +1,33 @@
+﻿{% extends 'layouts/base.html' %}
+{% block title %}Contact — {{ APP_NAME }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="ss-card ss-fade-in">
+            <h2 class="mb-2">Contact Us</h2>
+            <p class="text-muted mb-4">Questions about Study Sync? Send us a message.</p>
+            <form method="post" class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" required>
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Message</label>
+                    <textarea name="message" class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary ss-btn-primary"><i class="bi bi-send me-2"></i>Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

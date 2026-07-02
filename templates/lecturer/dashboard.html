@@ -1,0 +1,61 @@
+﻿{% extends 'layouts/dashboard.html' %}
+{% block title %}Lecturer Dashboard — {{ APP_NAME }}{% endblock %}
+{% block page_title %}Lecturer Dashboard{% endblock %}
+{% block page_subtitle %}Manage classes, slots, and attendance{% endblock %}
+{% block sidebar %}
+<nav class="nav flex-column ss-sidebar-nav">
+    <a class="nav-link active" href="{{ url_for('lecturer.dashboard') }}"><i class="bi bi-grid me-2"></i>Overview</a>
+    <a class="nav-link" href="{{ url_for('lecturer.calendar') }}"><i class="bi bi-calendar3 me-2"></i>Calendar</a>
+    <a class="nav-link" href="{{ url_for('lecturer.profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
+</nav>
+{% endblock %}
+{% block dashboard_content %}
+<div class="row g-4 mb-4">
+    <div class="col-md-4"><div class="ss-stat-card"><span class="text-muted">My Classes</span><h2>{{ classes|length }}</h2></div></div>
+    <div class="col-md-4"><div class="ss-stat-card"><span class="text-muted">Upcoming Bookings</span><h2>{{ bookings|length }}</h2></div></div>
+    <div class="col-md-4"><div class="ss-stat-card"><span class="text-muted">Attendance Records</span><h2>{{ attendance_stats|sum(attribute='total') if attendance_stats else 0 }}</h2></div></div>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-5">
+        <div class="ss-card ss-fade-in">
+            <h5 class="mb-3">Create Class + Slot</h5>
+            <form method="post" action="{{ url_for('lecturer.create_class') }}" class="row g-2">
+                <div class="col-12"><input type="text" name="title" class="form-control" placeholder="Class title" required></div>
+                <div class="col-12"><textarea name="description" class="form-control" rows="2" placeholder="Description"></textarea></div>
+                <div class="col-6"><input type="text" name="category" class="form-control" placeholder="Category" value="General"></div>
+                <div class="col-6"><input type="text" name="location" class="form-control" placeholder="Location" value="Online"></div>
+                <div class="col-6"><input type="number" name="duration_minutes" class="form-control" placeholder="Duration" value="60"></div>
+                <div class="col-6"><input type="number" name="max_capacity" class="form-control" placeholder="Capacity" value="15"></div>
+                <div class="col-6"><label class="form-label small">Start</label><input type="datetime-local" name="start_time" class="form-control" required></div>
+                <div class="col-6"><label class="form-label small">End</label><input type="datetime-local" name="end_time" class="form-control" required></div>
+                <div class="col-12"><button class="btn btn-primary w-100 ss-btn-primary">Create</button></div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="ss-card ss-fade-in">
+            <h5 class="mb-3">Student Bookings & Attendance</h5>
+            {% for booking in bookings %}
+            <div class="ss-list-item">
+                <div>
+                    <strong>{{ booking.student_name }}</strong>
+                    <div class="text-muted small">{{ booking.class_title }} · {{ booking.start_time.strftime('%d %b %H:%M') }}</div>
+                    {% if booking.attendance_status %}<span class="badge bg-secondary">{{ booking.attendance_status }}</span>{% endif %}
+                </div>
+                <div class="d-flex gap-1">
+                    {% for status in ['present', 'late', 'absent'] %}
+                    <form method="post" action="{{ url_for('lecturer.mark_attendance', booking_id=booking.booking_id) }}">
+                        <input type="hidden" name="status" value="{{ status }}">
+                        <button class="btn btn-sm btn-outline-primary">{{ status|title }}</button>
+                    </form>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <p class="text-muted mb-0">No bookings yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
